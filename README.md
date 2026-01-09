@@ -1,6 +1,11 @@
 <h1>🏷️ Project Title</h1>
-<p><b>AI-Veo3-Ad-Generation-Platform</b><br>
-End-to-end AI-powered voice-to-video advertisement generation system using Telegram, OpenAI, Veo3, Airtable, Google Drive, and JSON2Video.</p>
+<h2 style="font-size: 2.2em; font-weight: 700; margin-top: 0;">
+  AI-Veo3-Ad-Generation-Platform
+</h2>
+
+<p style="font-size: 1.05em; color: #444; margin-top: 6px;">
+  End-to-end AI-powered voice-to-video advertisement generation system using Telegram, OpenAI, Veo3, Airtable, Google Drive, and JSON2Video.
+</p>
 
 <hr>
 
