@@ -1,0 +1,2500 @@
+{
+  "name": "Voice Note -> Veo 3 AD",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        860,
+        920
+      ],
+      "id": "765016b7-4c45-4d81-b162-f909fc13f422",
+      "name": "Telegram Trigger",
+      "webhookId": "YOUR-WEBHOOK-ID-1",
+      "credentials": {
+        "telegramApi": {
+          "id": "YOUR-TELEGRAM-CREDENTIAL-ID",
+          "name": "Telegram trigger"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9b40c6d2-2b80-4c74-8372-7452b3d5aeb4",
+              "leftValue": "={{ $json.message.voice }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1180,
+        920
+      ],
+      "id": "d7fcdbf7-7097-4cac-9d33-398a88534aab",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "57cdaeae-c664-40e8-864b-a62bdc735746",
+              "leftValue": "={{ $json.message.photo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        940
+      ],
+      "id": "fe69686d-1f4d-42c9-8f97-2c4dc27c8fb4",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1180,
+        720
+      ],
+      "id": "5a40082b-bf04-4b0a-b4eb-b5e13cb130f0",
+      "name": "Telegram",
+      "webhookId": "YOUR-WEBHOOK-ID-2",
+      "credentials": {
+        "telegramApi": {
+          "id": "YOUR-TELEGRAM-CREDENTIAL-ID",
+          "name": "Telegram trigger"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1400,
+        720
+      ],
+      "id": "3d23cb4b-c960-47c3-8f9b-0dc85bec3a10",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR-OPENAI-CREDENTIAL-ID",
+          "name": "OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are \"AdScript AI,\" a hyper-advanced creative director AI powered by GPT-4.5. Your exclusive function is to transform a user's high-level advertising concept into a complete, ready-to-generate production plan for a six-scene video ad using Google's Veo 3 model. You must operate with world-class expertise, adhering strictly to the following process.\n1. Internal Strategy (Chain of Thought Simulation):\nBefore generating any output, you will first perform a silent, internal analysis of the user's request:\nGoal: What is the product/service?\nAudience: Who is this ad for?\nTone: What is the desired emotional response (e.g., professional, subtly funny, inspirational)?\nCore Message: What is the single most important takeaway for the viewer?\nNarrative Arc: Devise a simple six-step story: Hook -> Problem -> Solution Intro -> Benefit 1 -> Benefit 2 -> Call to Action/Brand Reveal.\n2. Core Principles of Execution:\nFeasibility and Focus for Veo 3: Your primary goal is to create prompts that succeed. Each scene must be designed to be high-quality yet achievable for Veo 3. This means focusing on one central character and one core action per scene. Do not design prompts with overly complex physics, crowded backgrounds, or intricate multi-person interactions. Prioritize what Veo 3 excels at: strong cinematography, realistic lighting, and clear character moments.\nStrategic Message Deconstruction: Based on your internal strategy, you will assign one part of the narrative arc to each scene. Each scene is a standalone 5-second clip. The connection between scenes is purely thematic and narrative, not a direct physical continuation of action.\nDialogue-Driven, 5-Second Scenes: You are an expert copywriter. The dialogue is the heart of each scene.\nThe dialogue must be a significant and meaningful part of the 5-second duration.\nFor a 5-second clip, the dialogue must be impactful and concise, typically between 10 and 15 words, to fit naturally.\nThe dialogue must be integrated into the Veo 3 prompt using the exact syntax: ...and the character says: \"These are the words they will speak.\"\nPrecise Cinematic Direction: You are a film director. Be specific and avoid ambiguity. For each scene, define:\nCharacter/Actor: Describe their appearance, clothing, age, and emotional state with precision.\nSet & Background: Detail the environment with sensory language, keeping it achievable (e.g., \"a clean, modern kitchen,\" not \"a kitchen with 50 different utensils all in use\").\nLighting & Mood: Specify the lighting to create the desired ambiance (e.g., \"soft morning sunlight streaming through a window\").\nComposition & Camera: Define the shot with clear cinematic terms (e.g., \"Medium close-up, slow push-in,\" \"Dynamic tracking shot\").\nVeo 3 Prompt Optimization & Constraints: Each prompt must be a masterpiece of specificity.\nNo On-Screen Text: The prompt must explicitly command Veo 3 not to generate any visible text, brand names, captions, or subtitles burned into the video frames.\nInstructive Negative Prompts: The negative prompt (--neg) must be a clear command. Use direct instructions like \"Do not do X\" instead of just keywords.\nStrict Output Format:\nYour entire output must be a single JSON object. Do not provide any conversational text, explanations, or markdown outside of the final JSON block. The user will provide their ad concept, and you will respond ONLY with the JSON.\n{\n  \"ad_concept_name\": \"A concise and catchy name for the advertising campaign.\",\n  \"creative_summary\": \"A brief, one-sentence summary of your creative strategy and the narrative arc of the ad.\",\n  \"scenes\": [\n    {\n      \"scene_number\": 1,\n      \"scene_title\": \"A short, descriptive title for Scene 1 (e.g., 'The Morning Commute Chaos').\",\n      \"veo_prompt\": \"A complete, highly-detailed Veo 3 prompt for a 5-second scene. Must include specific cinematic details, character descriptions, and dialogue (10-15 words) formatted correctly. The prompt must explicitly forbid on-screen text. --neg Do not include any on-screen text, logos, or watermarks. Do not generate blurry, distorted, or low-resolution output. Do not create characters with unrealistic hands or distorted facial features. The composition should not be jarring.\"\n    },\n    {\n      \"scene_number\": 2,\n      \"scene_title\": \"A short, descriptive title for Scene 2.\",\n      \"veo_prompt\": \"A complete, highly-detailed Veo 3 prompt for a 5-second scene, following all rules.\"\n    },\n    {\n      \"scene_number\": 3,\n      \"scene_title\": \"A short, descriptive title for Scene 3.\",\n      \"veo_prompt\": \"A complete, highly-detailed Veo 3 prompt for a 5-second scene, following all rules.\"\n    },\n    {\n      \"scene_number\": 4,\n      \"scene_title\": \"A short, descriptive title for Scene 4.\",\n      \"veo_prompt\": \"A complete, highly-detailed Veo 3 prompt for a 5-second scene, following all rules.\"\n    },\n    {\n      \"scene_number\": 5,\n      \"scene_title\": \"A short, descriptive title for Scene 5.\",\n      \"veo_prompt\": \"A complete, highly-detailed Veo 3 prompt for a 5-second scene, following all rules.\"\n    },\n    {\n      \"scene_number\": 6,\n      \"scene_title\": \"A short, descriptive title for Scene 6.\",\n      \"veo_prompt\": \"A complete, highly-detailed Veo 3 prompt for the final 5-second scene, often ending with the product reveal or call to action, following all rules.\"\n    }\n  ]\n}",
+              "role": "system"
+            },
+            {
+              "content": "={{ $('Telegram Trigger').item.json.message.text || $json.text}}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1660,
+        960
+      ],
+      "id": "f81dc3e5-81df-48d8-9be9-6720ed657f63",
+      "name": "OpenAI3",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR-OPENAI-CREDENTIAL-ID",
+          "name": "OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://queue.fal.run/fal-ai/veo3",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key YOUR-VEO3-API-KEY:YOUR-VEO3-API-SECRET"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $json.message.content.scenes[0].scene_title }} : {{ $json.message.content.scenes[0].veo_prompt }}"
+            },
+            {
+              "name": "aspect_ratio",
+              "value": "16:9"
+            },
+            {
+              "name": "generate_audio",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2060,
+        960
+      ],
+      "id": "318cda6a-d38c-4e17-a6c7-1a28c6188749",
+      "name": "HTTP Request17"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://queue.fal.run/fal-ai/veo3",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key YOUR-VEO3-API-KEY:YOUR-VEO3-API-SECRET"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $('OpenAI3').item.json.message.content.scenes[1].scene_title }} : {{ $('OpenAI3').item.json.message.content.scenes[1].veo_prompt }}"
+            },
+            {
+              "name": "aspect_ratio",
+              "value": "16:9"
+            },
+            {
+              "name": "generate_audio",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3420,
+        960
+      ],
+      "id": "5256a5e2-0f4c-4535-b588-24ee50904bda",
+      "name": "HTTP Request18"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://queue.fal.run/fal-ai/veo3",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key YOUR-VEO3-API-KEY:YOUR-VEO3-API-SECRET"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $('OpenAI3').item.json.message.content.scenes[2].scene_title }} : {{ $('OpenAI3').item.json.message.content.scenes[2].veo_prompt }}"
+            },
+            {
+              "name": "aspect_ratio",
+              "value": "16:9"
+            },
+            {
+              "name": "generate_audio",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2060,
+        1200
+      ],
+      "id": "8c8ab7f9-8cb8-4417-82a7-6549e02fea5f",
+      "name": "HTTP Request19"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://queue.fal.run/fal-ai/veo3",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key YOUR-VEO3-API-KEY:YOUR-VEO3-API-SECRET"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $('OpenAI3').item.json.message.content.scenes[3].scene_title }}: {{ $('OpenAI3').item.json.message.content.scenes[3].veo_prompt }}"
+            },
+            {
+              "name": "aspect_ratio",
+              "value": "16:9"
+            },
+            {
+              "name": "generate_audio",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3420,
+        1200
+      ],
+      "id": "fe5438df-2a68-4644-a9e4-d29a58753711",
+      "name": "HTTP Request20"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-BASE-ID",
+          "mode": "list",
+          "cachedResultName": "POV Blog gen",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-TABLE-ID",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID/YOUR-AIRTABLE-TABLE-ID"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('OpenAI3').item.json.message.content.ad_concept_name }}",
+            "scene_link3": "=",
+            "scene_link1": "={{ $json.webContentLink }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "voice_over",
+              "displayName": "voice_over",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link1",
+              "displayName": "scene_link1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link2",
+              "displayName": "scene_link2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link3",
+              "displayName": "scene_link3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link4",
+              "displayName": "scene_link4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link5",
+              "displayName": "scene_link5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link6",
+              "displayName": "scene_link6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        3160,
+        960
+      ],
+      "id": "0d10683c-5cf8-49c9-9e87-8165f783327f",
+      "name": "Airtable7",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "YOUR-AIRTABLE-CREDENTIAL-ID",
+          "name": "Airtable Personal Access Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-BASE-ID",
+          "mode": "list",
+          "cachedResultName": "POV Blog gen",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-TABLE-ID",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID/YOUR-AIRTABLE-TABLE-ID"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "scene_link4": "=",
+            "Name": "={{ $('OpenAI3').item.json.message.content.ad_concept_name }}",
+            "scene_link2": "={{ $json.webContentLink }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "voice_over",
+              "displayName": "voice_over",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link1",
+              "displayName": "scene_link1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link2",
+              "displayName": "scene_link2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link3",
+              "displayName": "scene_link3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link4",
+              "displayName": "scene_link4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link5",
+              "displayName": "scene_link5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link6",
+              "displayName": "scene_link6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        4500,
+        960
+      ],
+      "id": "f02d35ed-9f15-4725-abbb-49c295f43ee4",
+      "name": "Airtable8",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "YOUR-AIRTABLE-CREDENTIAL-ID",
+          "name": "Airtable Personal Access Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-BASE-ID",
+          "mode": "list",
+          "cachedResultName": "POV Blog gen",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-TABLE-ID",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID/YOUR-AIRTABLE-TABLE-ID"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "scene_link5": "=",
+            "Name": "={{ $('OpenAI3').item.json.message.content.ad_concept_name }}",
+            "scene_link3": "={{ $json.webContentLink }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "voice_over",
+              "displayName": "voice_over",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link1",
+              "displayName": "scene_link1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link2",
+              "displayName": "scene_link2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link3",
+              "displayName": "scene_link3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link4",
+              "displayName": "scene_link4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link5",
+              "displayName": "scene_link5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link6",
+              "displayName": "scene_link6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        3180,
+        1200
+      ],
+      "id": "8976d412-ba95-4c14-a072-eb3d8d9d6311",
+      "name": "Airtable9",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "YOUR-AIRTABLE-CREDENTIAL-ID",
+          "name": "Airtable Personal Access Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-BASE-ID",
+          "mode": "list",
+          "cachedResultName": "POV Blog gen",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-TABLE-ID",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID/YOUR-AIRTABLE-TABLE-ID"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "scene_link6": "=",
+            "Name": "={{ $('OpenAI3').item.json.message.content.ad_concept_name }}",
+            "scene_link4": "={{ $json.webContentLink }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "voice_over",
+              "displayName": "voice_over",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link1",
+              "displayName": "scene_link1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link2",
+              "displayName": "scene_link2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link3",
+              "displayName": "scene_link3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link4",
+              "displayName": "scene_link4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link5",
+              "displayName": "scene_link5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link6",
+              "displayName": "scene_link6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        4500,
+        1200
+      ],
+      "id": "2cdd2639-2e58-46c5-a04b-66825ab37cb1",
+      "name": "Airtable10",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "YOUR-AIRTABLE-CREDENTIAL-ID",
+          "name": "Airtable Personal Access Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2280,
+        960
+      ],
+      "id": "ca9837b0-8b14-47d7-bf59-eda93acc25f4",
+      "name": "Wait7",
+      "webhookId": "YOUR-WEBHOOK-ID-3"
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3620,
+        960
+      ],
+      "id": "f759622b-8be6-4998-98a3-b37713daab80",
+      "name": "Wait8",
+      "webhookId": "YOUR-WEBHOOK-ID-4"
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2280,
+        1200
+      ],
+      "id": "1095fd60-9fe4-44fe-81a3-322da537ae4e",
+      "name": "Wait9",
+      "webhookId": "YOUR-WEBHOOK-ID-5"
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3620,
+        1200
+      ],
+      "id": "8b7d1e58-923a-4386-aaa9-ce0f65d14ac0",
+      "name": "Wait10",
+      "webhookId": "YOUR-WEBHOOK-ID-6"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "YOUR-GOOGLE-DRIVE-FOLDER-ID",
+          "mode": "list",
+          "cachedResultName": "Video BLOG FPV",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/YOUR-GOOGLE-DRIVE-FOLDER-ID"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2960,
+        960
+      ],
+      "id": "c41bdb2a-10a6-48b4-9880-b2188007e367",
+      "name": "Google Drive7",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR-GOOGLE-DRIVE-CREDENTIAL-ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "YOUR-GOOGLE-DRIVE-FOLDER-ID",
+          "mode": "list",
+          "cachedResultName": "Video BLOG FPV",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/YOUR-GOOGLE-DRIVE-FOLDER-ID"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4300,
+        1200
+      ],
+      "id": "2934ebe3-f1a8-455a-8ee8-22af5e0a8f0b",
+      "name": "Google Drive8",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR-GOOGLE-DRIVE-CREDENTIAL-ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "YOUR-GOOGLE-DRIVE-FOLDER-ID",
+          "mode": "list",
+          "cachedResultName": "Video BLOG FPV",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/YOUR-GOOGLE-DRIVE-FOLDER-ID"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4280,
+        960
+      ],
+      "id": "50f1d388-228b-4e98-868b-36f428ce049f",
+      "name": "Google Drive9",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR-GOOGLE-DRIVE-CREDENTIAL-ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "YOUR-GOOGLE-DRIVE-FOLDER-ID",
+          "mode": "list",
+          "cachedResultName": "Video BLOG FPV",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/YOUR-GOOGLE-DRIVE-FOLDER-ID"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2960,
+        1200
+      ],
+      "id": "d6b9aa6a-b03f-4ddf-8f70-1851bfcfe558",
+      "name": "Google Drive10",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR-GOOGLE-DRIVE-CREDENTIAL-ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2740,
+        960
+      ],
+      "id": "f06e4f9e-6e63-4c1d-a08a-71acd8ceddbf",
+      "name": "HTTP Request32"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4060,
+        960
+      ],
+      "id": "c8dee004-bb29-405a-94fb-670bc85e2df9",
+      "name": "HTTP Request33"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2740,
+        1200
+      ],
+      "id": "68a49011-b471-4b37-9779-5d3834d41664",
+      "name": "HTTP Request34"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4080,
+        1200
+      ],
+      "id": "895b541f-d80f-43af-9189-bc5bc9070727",
+      "name": "HTTP Request35"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('HTTP Request17').item.json.response_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key YOUR-VEO3-API-KEY:YOUR-VEO3-API-SECRET"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2520,
+        960
+      ],
+      "id": "a201db06-b1a5-433f-8a43-d7ee82713e1c",
+      "name": "HTTP Request22"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('HTTP Request18').item.json.response_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key YOUR-VEO3-API-KEY:YOUR-VEO3-API-SECRET"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3860,
+        960
+      ],
+      "id": "c26f434d-7edc-4094-8905-2ca5181d12ad",
+      "name": "HTTP Request23"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('HTTP Request19').item.json.response_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key YOUR-VEO3-API-KEY:YOUR-VEO3-API-SECRET"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2520,
+        1200
+      ],
+      "id": "ceec65ae-d0ef-43e6-be32-246e6210cbb7",
+      "name": "HTTP Request24"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://queue.fal.run/fal-ai/veo3",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key YOUR-VEO3-API-KEY:YOUR-VEO3-API-SECRET"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $('OpenAI3').item.json.message.content.scenes[4].scene_title }} : {{ $('OpenAI3').item.json.message.content.scenes[4].veo_prompt }}"
+            },
+            {
+              "name": "aspect_ratio",
+              "value": "16:9"
+            },
+            {
+              "name": "generate_audio",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2060,
+        1420
+      ],
+      "id": "b540d654-4ce6-4e3b-8587-ba51ec709fb2",
+      "name": "HTTP Request25"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('HTTP Request25').item.json.response_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key YOUR-VEO3-API-KEY:YOUR-VEO3-API-SECRET"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2520,
+        1420
+      ],
+      "id": "9bff6b01-6058-4a29-a9fb-46e84d807ec5",
+      "name": "HTTP Request36"
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2300,
+        1420
+      ],
+      "id": "493e5822-1024-4c52-982b-81a6c7354845",
+      "name": "Wait11",
+      "webhookId": "YOUR-WEBHOOK-ID-7"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "YOUR-GOOGLE-DRIVE-FOLDER-ID",
+          "mode": "list",
+          "cachedResultName": "Video BLOG FPV",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/YOUR-GOOGLE-DRIVE-FOLDER-ID"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2960,
+        1420
+      ],
+      "id": "30ef8e55-57ee-450b-9c53-1aa7fcaa413b",
+      "name": "Google Drive11",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR-GOOGLE-DRIVE-CREDENTIAL-ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2740,
+        1420
+      ],
+      "id": "b1f7b667-2ac0-45b6-9ea6-f6a7e3f45850",
+      "name": "HTTP Request37"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://queue.fal.run/fal-ai/veo3",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key YOUR-VEO3-API-KEY:YOUR-VEO3-API-SECRET"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $('OpenAI3').item.json.message.content.scenes[5].scene_title }} : {{ $('OpenAI3').item.json.message.content.scenes[5].veo_prompt }}"
+            },
+            {
+              "name": "aspect_ratio",
+              "value": "16:9"
+            },
+            {
+              "name": "generate_audio",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3420,
+        1420
+      ],
+      "id": "47b907ba-e52b-4f03-bdf7-39105d3aa8e1",
+      "name": "HTTP Request31"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('HTTP Request31').item.json.response_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key YOUR-VEO3-API-KEY:YOUR-VEO3-API-SECRET"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3860,
+        1420
+      ],
+      "id": "ca3e9463-c213-4970-b39b-1fac138c05e5",
+      "name": "HTTP Request39"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-BASE-ID",
+          "mode": "list",
+          "cachedResultName": "POV Blog gen",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-TABLE-ID",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID/YOUR-AIRTABLE-TABLE-ID"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "scene_link6": "={{ $json.webContentLink }}",
+            "Name": "={{ $('OpenAI3').item.json.message.content.ad_concept_name }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "voice_over",
+              "displayName": "voice_over",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link1",
+              "displayName": "scene_link1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link2",
+              "displayName": "scene_link2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link3",
+              "displayName": "scene_link3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link4",
+              "displayName": "scene_link4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link5",
+              "displayName": "scene_link5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link6",
+              "displayName": "scene_link6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        4480,
+        1420
+      ],
+      "id": "edb78785-6eda-467b-957f-9ef865ef7f01",
+      "name": "Airtable13",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "YOUR-AIRTABLE-CREDENTIAL-ID",
+          "name": "Airtable Personal Access Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3660,
+        1420
+      ],
+      "id": "70befecd-ae45-41e4-833c-a372a497bfb4",
+      "name": "Wait",
+      "webhookId": "YOUR-WEBHOOK-ID-8"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "YOUR-GOOGLE-DRIVE-FOLDER-ID",
+          "mode": "list",
+          "cachedResultName": "Video BLOG FPV",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/YOUR-GOOGLE-DRIVE-FOLDER-ID"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4300,
+        1420
+      ],
+      "id": "9f11cd4d-a437-4482-9db9-abc856cc757d",
+      "name": "Google Drive12",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR-GOOGLE-DRIVE-CREDENTIAL-ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4100,
+        1420
+      ],
+      "id": "a1cb650f-a506-448c-b153-48a30f0f3b14",
+      "name": "HTTP Request40"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-BASE-ID",
+          "mode": "list",
+          "cachedResultName": "POV Blog gen",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-TABLE-ID",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID/YOUR-AIRTABLE-TABLE-ID"
+        },
+        "filterByFormula": "=Name = '{{ $json.fields.Name }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        4500,
+        740
+      ],
+      "id": "8e02fde8-c9a2-4476-a228-cf8d20fa730c",
+      "name": "Airtable14",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "YOUR-AIRTABLE-CREDENTIAL-ID",
+          "name": "Airtable Personal Access Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.json2video.com/v2/movies",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n    \"x-api-key\": \"YOUR-JSON2VIDEO-API-KEY\",\n    \"Content-Type\": \"application/json\"\n}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"resolution\": \"full-hd\",\n  \"quality\": \"high\",\n  \"scenes\": [\n    {\n      \"duration\": -1,\n      \"elements\": [\n        {\n          \"type\": \"video\",\n          \"src\": \"{{ $json.scene_link1 }}\",\n          \"resize\": \"cover\",\n          \"muted\": false,\n          \"zoom\": 1,\n          \"pan\": \"bottom-right\",\n          \"fade-in\": 0.3,\n          \"fade-out\": 0.3\n        }\n      ]\n    },\n    {\n      \"duration\": -1,\n      \"elements\": [\n        {\n          \"type\": \"video\",\n          \"src\": \"{{ $json.scene_link2 }}\",\n          \"resize\": \"cover\",\n          \"muted\": false,\n          \"zoom\": -2,\n          \"pan\": \"top-left\",\n          \"fade-in\": 0.3,\n          \"fade-out\": 0.3\n        }\n      ]\n    },\n    {\n      \"duration\": -1,\n      \"elements\": [\n        {\n          \"type\": \"video\",\n          \"src\": \"{{ $json.scene_link3 }}\",\n          \"resize\": \"cover\",\n          \"muted\": false,\n          \"zoom\": 4,\n          \"pan\": \"center-center\",\n          \"fade-in\": 0.3,\n          \"fade-out\": 0.3\n        }\n      ]\n    },\n    {\n      \"duration\": -1,\n      \"elements\": [\n        {\n          \"type\": \"video\",\n          \"src\": \"{{ $json.scene_link4 }}\",\n          \"resize\": \"cover\",\n          \"muted\": false,\n          \"pan\": \"right\",\n          \"fade-in\": 0.3,\n          \"fade-out\": 0.3\n        }\n      ]\n    },\n    {\n      \"duration\": -1,\n      \"elements\": [\n        {\n          \"type\": \"video\",\n          \"src\": \"{{ $json.scene_link5 }}\",\n          \"resize\": \"cover\",\n          \"muted\": false,\n          \"zoom\": -4,\n          \"pan\": \"bottom-left\",\n          \"fade-in\": 0.3,\n          \"fade-out\": 0.3\n        }\n      ]\n    },\n    {\n      \"duration\": -1,\n      \"elements\": [\n        {\n          \"type\": \"video\",\n          \"src\": \"{{ $json.scene_link6 }}\",\n          \"resize\": \"cover\",\n          \"muted\": false,\n          \"zoom\": 5,\n          \"pan\": \"center-center\",\n          \"fade-in\": 0.3,\n          \"fade-out\": 0.3\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4700,
+        740
+      ],
+      "id": "59f5db64-35ef-4558-b818-784dd0c3cd56",
+      "name": "HTTP Request15"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.json2video.com/v2/movies?project={{ $json.project }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-KEY",
+              "value": "YOUR-JSON2VIDEO-API-KEY"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4880,
+        940
+      ],
+      "id": "8a5840e3-4e64-47b0-a411-8b8724e6b21e",
+      "name": "HTTP Request41"
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4880,
+        740
+      ],
+      "id": "821d8035-a03b-40c6-9039-ec1dc8d146be",
+      "name": "Wait13",
+      "webhookId": "YOUR-WEBHOOK-ID-9"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('HTTP Request20').item.json.response_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key YOUR-VEO3-API-KEY:YOUR-VEO3-API-SECRET"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3860,
+        1200
+      ],
+      "id": "2fdcc314-4b0f-4e57-a2d6-1ec237bc2d4b",
+      "name": "HTTP Request42"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.movie.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4880,
+        1100
+      ],
+      "id": "4a084503-5446-4fa0-8625-3525ced2c7c4",
+      "name": "HTTP Request21"
+    },
+    {
+      "parameters": {
+        "operation": "sendVideo",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4880,
+        1260
+      ],
+      "id": "c4a656c9-1c91-478c-b2c5-98f9aaf032aa",
+      "name": "Telegram3",
+      "webhookId": "YOUR-WEBHOOK-ID-10",
+      "credentials": {
+        "telegramApi": {
+          "id": "YOUR-TELEGRAM-CREDENTIAL-ID",
+          "name": "Telegram trigger"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=Video url:  {{ $('HTTP Request21').item.json.movie.url }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4880,
+        1420
+      ],
+      "id": "8a7afdda-fa0c-4587-99e8-9a9ba8496820",
+      "name": "Telegram5",
+      "webhookId": "YOUR-WEBHOOK-ID-11",
+      "credentials": {
+        "telegramApi": {
+          "id": "YOUR-TELEGRAM-CREDENTIAL-ID",
+          "name": "Telegram trigger"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-BASE-ID",
+          "mode": "list",
+          "cachedResultName": "POV Blog gen",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR-AIRTABLE-TABLE-ID",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/YOUR-AIRTABLE-BASE-ID/YOUR-AIRTABLE-TABLE-ID"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "scene_link6": "=",
+            "Name": "={{ $('OpenAI3').item.json.message.content.ad_concept_name }}",
+            "scene_link5": "={{ $json.webContentLink }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "voice_over",
+              "displayName": "voice_over",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link1",
+              "displayName": "scene_link1",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link2",
+              "displayName": "scene_link2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link3",
+              "displayName": "scene_link3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link4",
+              "displayName": "scene_link4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link5",
+              "displayName": "scene_link5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scene_link6",
+              "displayName": "scene_link6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        3200,
+        1420
+      ],
+      "id": "8e9f8c4f-c1bb-4b0f-9533-bcbc00ff55da",
+      "name": "Airtable11",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "YOUR-AIRTABLE-CREDENTIAL-ID",
+          "name": "Airtable Personal Access Token"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "OpenAI3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request17": {
+      "main": [
+        [
+          {
+            "node": "Wait7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request18": {
+      "main": [
+        [
+          {
+            "node": "Wait8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request19": {
+      "main": [
+        [
+          {
+            "node": "Wait9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request20": {
+      "main": [
+        [
+          {
+            "node": "Wait10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable7": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable8": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable9": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait7": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait8": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request23",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait9": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request24",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait10": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request42",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive7": {
+      "main": [
+        [
+          {
+            "node": "Airtable7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive8": {
+      "main": [
+        [
+          {
+            "node": "Airtable10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive9": {
+      "main": [
+        [
+          {
+            "node": "Airtable8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive10": {
+      "main": [
+        [
+          {
+            "node": "Airtable9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request32": {
+      "main": [
+        [
+          {
+            "node": "Google Drive7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request33": {
+      "main": [
+        [
+          {
+            "node": "Google Drive9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request34": {
+      "main": [
+        [
+          {
+            "node": "Google Drive10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request35": {
+      "main": [
+        [
+          {
+            "node": "Google Drive8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request22": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request32",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request23": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request33",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request24": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request34",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable10": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request25",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request25": {
+      "main": [
+        [
+          {
+            "node": "Wait11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request36": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request37",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait11": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request36",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive11": {
+      "main": [
+        [
+          {
+            "node": "Airtable11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request37": {
+      "main": [
+        [
+          {
+            "node": "Google Drive11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request31": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request39": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request40",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request39",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive12": {
+      "main": [
+        [
+          {
+            "node": "Airtable13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request40": {
+      "main": [
+        [
+          {
+            "node": "Google Drive12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable14": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request15": {
+      "main": [
+        [
+          {
+            "node": "Wait13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait13": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request41",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable13": {
+      "main": [
+        [
+          {
+            "node": "Airtable14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request42": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request35",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request21": {
+      "main": [
+        [
+          {
+            "node": "Telegram3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request41": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram3": {
+      "main": [
+        [
+          {
+            "node": "Telegram5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable11": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request31",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "YOUR-VERSION-ID",
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "YOUR-INSTANCE-ID"
+  },
+  "id": "YOUR-WORKFLOW-ID",
+  "tags": []
+}
