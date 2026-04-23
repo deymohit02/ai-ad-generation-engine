@@ -1,12 +1,22 @@
-<h1>🏷️ Project Title</h1>
-<h2 style="font-size: 2.2em; font-weight: 700; margin-top: 0;">
-  AI-Veo3-Ad-Generation-Platform
-</h2>
+<div align="center">
+  <img 
+    src="assets/diagrams/AI Cinematic Ad Intelligence Platform.png" 
+    alt="AI Cinematic Ad Intelligence Platform Logo Animation"
+    width="100%"
+  />
 
-<p style="font-size: 1.05em; color: #444; margin-top: 6px;">
-  End-to-end AI-powered voice-to-video advertisement generation system using Telegram, OpenAI, Veo3, Airtable, Google Drive, and JSON2Video.
-</p>
+  <h1 style="font-size: 3em; font-weight: 800; margin: 0.4em 0 0;">
+    AI Cinematic Ad Intelligence Platform  
+  </h1>
 
+  <h3 style="margin-top: 0.6em;">
+    From Prompt to Production — Multi-Scene AI Ads, Orchestrated, Rendered, and Delivered in Real Time 
+  </h3>
+
+  <p>
+    <em>An enterprise-grade, AI-native platform engineered to transform raw voice or text inputs into fully orchestrated, multi-scene cinematic advertisements at scale. Powered by agentic prompt intelligence, event-driven automation, and distributed cloud rendering, the system executes an end-to-end creative pipeline—from ideation and scene generation to compositing and final delivery—with precision and speed.  </em>
+  </p>
+</div>
 <hr>
 
 <h1>🧾 Executive Summary</h1>
